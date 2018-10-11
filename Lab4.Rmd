@@ -17,8 +17,19 @@ summary(av)
 ```
 ```{r}
 av2 = gather(av, key=Time, Death, c(11,13,15,17,19))
-av2 = gather(av2, key=Time_Return, Return, c(11,12,13,14,15))
-av2 = select(av2, -Time_Return)
+summary(av2)
+av3 = gather(av, key=Time_Return, Return, c(12,14,16,18,20))
+av2$Return = av3$Return
+av2 = select(av2, -c(11:15))
 av2$Time = parse_number(av2$Time)
-av2 %>% select(c(Time, Death,Return)) %>% head()
+av2 %>% summary()
+```
+
+Nicholas Stout: "Of the 173 Avengers on the team, 69 have died at least once."
+```{r}
+total = nrow(av)
+claim = filter(av2, Time=="1" & Death=="YES")
+num_deaths = nrow(claim)
+total
+num_deaths
 ```

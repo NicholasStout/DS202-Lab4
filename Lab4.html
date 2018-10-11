@@ -180,17 +180,90 @@ $(document).ready(function () {
 ##                    
 ## </code></pre>
 <pre class="r"><code>av2 = gather(av, key=Time, Death, c(11,13,15,17,19))
-av2 = gather(av2, key=Time_Return, Return, c(11,12,13,14,15))
-av2 = select(av2, -Time_Return)
+summary(av2)</code></pre>
+<pre><code>##      URL             Name.Alias         Appearances       Current.        
+##  Length:865         Length:865         Min.   :   2.0   Length:865        
+##  Class :character   Class :character   1st Qu.:  58.0   Class :character  
+##  Mode  :character   Mode  :character   Median : 132.0   Mode  :character  
+##                                        Mean   : 414.1                     
+##                                        3rd Qu.: 491.0                     
+##                                        Max.   :4333.0                     
+##     Gender          Probationary.Introl Full.Reserve.Avengers.Intro
+##  Length:865         Length:865          Length:865                 
+##  Class :character   Class :character    Class :character           
+##  Mode  :character   Mode  :character    Mode  :character           
+##                                                                    
+##                                                                    
+##                                                                    
+##       Year      Years.since.joining   Honorary           Return1         
+##  Min.   :1900   Min.   :  0.00      Length:865         Length:865        
+##  1st Qu.:1979   1st Qu.:  5.00      Class :character   Class :character  
+##  Median :1996   Median : 19.00      Mode  :character   Mode  :character  
+##  Mean   :1988   Mean   : 26.55                                           
+##  3rd Qu.:2010   3rd Qu.: 36.00                                           
+##  Max.   :2015   Max.   :115.00                                           
+##    Return2            Return3            Return4         
+##  Length:865         Length:865         Length:865        
+##  Class :character   Class :character   Class :character  
+##  Mode  :character   Mode  :character   Mode  :character  
+##                                                          
+##                                                          
+##                                                          
+##    Return5             Notes               Time          
+##  Length:865         Length:865         Length:865        
+##  Class :character   Class :character   Class :character  
+##  Mode  :character   Mode  :character   Mode  :character  
+##                                                          
+##                                                          
+##                                                          
+##     Death          
+##  Length:865        
+##  Class :character  
+##  Mode  :character  
+##                    
+##                    
+## </code></pre>
+<pre class="r"><code>av3 = gather(av, key=Time_Return, Return, c(12,14,16,18,20))
+av2$Return = av3$Return
+av2 = select(av2, -c(11:15))
 av2$Time = parse_number(av2$Time)
-av2 %&gt;% select(c(Time, Death,Return)) %&gt;% head()</code></pre>
-<pre><code>##   Time Death Return
-## 1    1   YES     NO
-## 2    1   YES    YES
-## 3    1   YES    YES
-## 4    1   YES    YES
-## 5    1   YES    YES
-## 6    1    NO</code></pre>
+av2 %&gt;% summary()</code></pre>
+<pre><code>##      URL             Name.Alias         Appearances       Current.        
+##  Length:865         Length:865         Min.   :   2.0   Length:865        
+##  Class :character   Class :character   1st Qu.:  58.0   Class :character  
+##  Mode  :character   Mode  :character   Median : 132.0   Mode  :character  
+##                                        Mean   : 414.1                     
+##                                        3rd Qu.: 491.0                     
+##                                        Max.   :4333.0                     
+##     Gender          Probationary.Introl Full.Reserve.Avengers.Intro
+##  Length:865         Length:865          Length:865                 
+##  Class :character   Class :character    Class :character           
+##  Mode  :character   Mode  :character    Mode  :character           
+##                                                                    
+##                                                                    
+##                                                                    
+##       Year      Years.since.joining   Honorary            Notes          
+##  Min.   :1900   Min.   :  0.00      Length:865         Length:865        
+##  1st Qu.:1979   1st Qu.:  5.00      Class :character   Class :character  
+##  Median :1996   Median : 19.00      Mode  :character   Mode  :character  
+##  Mean   :1988   Mean   : 26.55                                           
+##  3rd Qu.:2010   3rd Qu.: 36.00                                           
+##  Max.   :2015   Max.   :115.00                                           
+##       Time      Death              Return         
+##  Min.   :1   Length:865         Length:865        
+##  1st Qu.:2   Class :character   Class :character  
+##  Median :3   Mode  :character   Mode  :character  
+##  Mean   :3                                        
+##  3rd Qu.:4                                        
+##  Max.   :5</code></pre>
+<p>Nicholas Stout: “Of the 173 Avengers on the team, 69 have died at least once.”</p>
+<pre class="r"><code>total = nrow(av)
+claim = filter(av2, Time==&quot;1&quot; &amp; Death==&quot;YES&quot;)
+num_deaths = nrow(claim)
+total</code></pre>
+<pre><code>## [1] 173</code></pre>
+<pre class="r"><code>num_deaths</code></pre>
+<pre><code>## [1] 69</code></pre>
 
 
 
