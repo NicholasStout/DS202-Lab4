@@ -39,3 +39,13 @@ percent = (num_deaths/total)*100
 percent
 ```
 About 40% of the Avengers has died at least once
+
+Isaac Nellans: "There's a 2-in-3 chance that a member of the Avengers returned from their first stint in the afterlife."
+```{r}
+av2$Return = as.factor(av2$Return)
+a = table(av2$Return)
+a
+pctg = a[names(a)=="YES"]/(a[names(a)=="NO"]+a[names(a)=="YES"])
+pctg
+```
+The pctg variable is the percentage of times that the Avenger who died came back to life. The claim in the article was that this was the case 2/3 of the time. The true value is 64.04%, which is similar to 2/3(or 66.66%).
