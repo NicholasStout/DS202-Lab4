@@ -28,8 +28,14 @@ av2 %>% summary()
 Nicholas Stout: "Of the 173 Avengers on the team, 69 have died at least once."
 ```{r}
 total = nrow(av)
+total
 claim = filter(av2, Time=="1" & Death=="YES")
 num_deaths = nrow(claim)
-total
 num_deaths
 ```
+Confirmed: There 69 of the 173 Avengers have died.
+```{r}
+percent = (num_deaths/total)*100
+percent
+```
+About 40% of the Avengers has died at least once
