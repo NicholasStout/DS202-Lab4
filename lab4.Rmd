@@ -1,0 +1,68 @@
+---
+title: "Lab4"
+author: "Nicholas Stout"
+date: "October 11, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+av <- read.csv("https://raw.githubusercontent.com/fivethirtyeight/data/master/avengers/avengers.csv", stringsAsFactors = FALSE)
+```
+
+
+```{r}
+summary(av)
+```
+```{r}
+av2 = gather(av, key=Time, Death, c(11,13,15,17,19))
+summary(av2)
+av3 = gather(av, key=Time_Return, Return, c(12,14,16,18,20))
+av2$Return = av3$Return
+av2 = select(av2, -c(11:15))
+av2$Time = parse_number(av2$Time)
+av2 %>% summary()
+```
+
+Nicholas Stout: "Of the 173 Avengers on the team, 69 have died at least once."
+```{r}
+total = nrow(av)
+total
+claim = filter(av2, Time=="1" & Death=="YES")
+num_deaths = nrow(claim)
+num_deaths
+```
+Confirmed: There 69 of the 173 Avengers have died.
+```{r}
+percent = (num_deaths/total)*100
+percent
+```
+About 40% of the Avengers has died at least once
+
+Isaac Nellans: "There's a 2-in-3 chance that a member of the Avengers returned from their first stint in the afterlife."
+```{r}
+av2$Return = as.factor(av2$Return)
+a = table(av2$Return)
+a
+pctg = a[names(a)=="YES"]/(a[names(a)=="NO"]+a[names(a)=="YES"])
+pctg
+```
+The pctg variable is the percentage of times that the Avenger who died came back to life. The claim in the article was that this was the case 2/3 of the time. The true value is 64.04%, which is similar to 2/3(or 66.66%).
+
+Dan Tacconi: "I counted 89 total deaths — some unlucky Avengers are basically Meat Loaf with an E-ZPass — and on 57 occasions the individual made a comeback."
+```{r}
+return1 = filter(av2, Time=="1" & Return=="YES")
+return2 = filter(av2, Time=="2" & Return=="YES")
+return3 = filter(av2, Time=="3" & Return=="YES")
+return4 = filter(av2, Time=="4" & Return=="YES")
+return5 = filter(av2, Time=="5" & Return=="YES")
+
+total_return<-nrow(return1)+nrow(return2)+nrow(return3)+nrow(return4)+nrow(return5)
+total_return
+
+```
+The claim of 57 total comebacks is correct.
+
+
+jkhkk
