@@ -11,7 +11,7 @@ library(tidyverse)
 av <- read.csv("https://raw.githubusercontent.com/fivethirtyeight/data/master/avengers/avengers.csv", stringsAsFactors = FALSE)
 ```
 
-
+github url: https://github.com/NicholasStout/DS202-Lab4
 ```{r}
 summary(av)
 ```
